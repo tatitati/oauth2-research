@@ -1,7 +1,4 @@
 <?php
-
-// AUTHORIZATION REQUEST
-
 function apiRequest($url, $post = FALSE, $headers = []) {
 	$ch = curl_init($url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
