@@ -2,7 +2,7 @@
 
 // AUTHORIZATION REQUEST
 
-function apiRequest($url, $post = FALSE, $haeders = []) {
+function apiRequest($url, $post = FALSE, $headers = []) {
 	$ch = curl_init($url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -28,6 +28,7 @@ function apiRequest($url, $post = FALSE, $haeders = []) {
 
 $githubClientID = '<fillme>';
 $githubClientSecret = '<fillme>';
+
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
 $apiURLBase = 'https://api.github.com/';
@@ -37,7 +38,28 @@ session_start();
 
 
 //
-// OBTAIN ACCESS TOKEN (if login OK)
+// 1. Login user. Get CODE
+//
+if(isset($_GET['action']) && $_GET['action'] == 'login') {
+	unset($_SESSION['access_token']);
+	$_SESSION['state'] = bin2hex(random_bytes(16));
+
+	$params = [
+		'response_type' => 'code',
+		'client_id' => $githubClientID,
+		'redirect_uri' => $baseURL,
+		'scope' => 'user public_repo',
+		'state' => $_SESSION['state']
+	];
+
+	// redirect -> this redirect show the github page to login.
+	header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+	die();
+}
+
+
+//
+// 2. OBTAIN ACCESS TOKEN (if login OK)
 //
 if (isset($_GET['code'])) {
 
@@ -54,6 +76,8 @@ if (isset($_GET['code'])) {
 	header('Location: ' . $baseURL);
 	die();
 }
+
+
 
 //
 // UI
@@ -77,26 +101,4 @@ if (!isset($_GET['action'])) {
 
 	die();
 }
-
-//
-// When clicked in login this is trigger
-//
-if(isset($_GET['action']) && $_GET['action'] == 'login') {
-	unset($_SESSION['access_token']);
-	$_SESSION['state'] = bin2hex(random_bytes(16));
-
-	$params = [
-		'response_type' => 'code',
-		'client_id' => $githubClientID,
-		'redirect_uri' => $baseURL,
-		'scope' => 'user public_repo',
-		'state' => $_SESSION['state']
-	];
-
-	// redirect -> this redirect show the github page to login.
-	header('Location: ' . $authorizeURL . '?' . http_build_query($params));
-	die();
-}
-
-
 
