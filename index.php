@@ -26,12 +26,11 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 }
 
 
-$githubClientID = '<fillme>';
-$githubClientSecret = '<fillme>';
+//$githubClientID = '<fillme>';
+//$githubClientSecret = '<fillme>';
 
-$authorizeURL = 'https://github.com/login/oauth/authorize';
-$tokenURL = 'https://github.com/login/oauth/access_token';
 $apiURLBase = 'https://api.github.com/';
+$authorizeURL = $apiURLBase . '/login/oauth/authorize';
 $baseURL = 'http://localhost:8000';
 
 session_start();
@@ -57,12 +56,12 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 	die();
 }
 
-
 //
 // 2. OBTAIN ACCESS TOKEN (if login OK)
 //
 if (isset($_GET['code'])) {
 
+	$tokenURL = $apiURLBase . '/login/oauth/access_token';
 	$token = apiRequest($tokenURL, [
 		'grant_type' => 'authorization_code',
 		'client_id' => $githubClientID,
@@ -77,7 +76,25 @@ if (isset($_GET['code'])) {
 	die();
 }
 
+//
+// Access resource
+//
+if(isset($_GET['action']) && $_GET['action'] == 'repos') {
+	unset($_SESSION['access_token']);
+	$_SESSION['state'] = bin2hex(random_bytes(16));
 
+	$params = [
+		'response_type' => 'code',
+		'client_id' => $githubClientID,
+		'redirect_uri' => $baseURL,
+		'scope' => 'user public_repo',
+		'state' => $_SESSION['state']
+	];
+
+	// redirect -> this redirect show the github page to login.
+	header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+	die();
+}
 
 //
 // UI
@@ -98,7 +115,5 @@ if (!isset($_GET['action'])) {
 		print_r($_SESSION['token_reponse']);
 		echo '</pre>';
 	}
-
-	die();
 }
 
