@@ -24,7 +24,8 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 $githubClientID = '<fillme>';
 $githubClientSecret = '<fillme>';
 $apiURLBase = 'https://api.github.com/';
-$authorizeURL = $apiURLBase . '/login/oauth/authorize';
+$authorizeURL = 'https://github.com/login/oauth/authorize';
+$tokenURL = 'https://github.com/login/oauth/access_token';
 $baseURL = 'http://localhost:8000';
 
 session_start();
@@ -54,7 +55,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 // 2. OBTAIN ACCESS TOKEN (if login OK)
 //
 if (isset($_GET['code'])) {
-	$tokenURL = $apiURLBase . '/login/oauth/access_token';
 	$token = apiRequest($tokenURL, [
 		'grant_type' => 'authorization_code',
 		'client_id' => $githubClientID,
