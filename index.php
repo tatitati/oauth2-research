@@ -54,7 +54,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 // 2. OBTAIN ACCESS TOKEN (if login OK)
 //
 if (isset($_GET['code'])) {
-
 	$tokenURL = $apiURLBase . '/login/oauth/access_token';
 	$token = apiRequest($tokenURL, [
 		'grant_type' => 'authorization_code',
@@ -71,7 +70,7 @@ if (isset($_GET['code'])) {
 }
 
 //
-// Access resource
+// 3. Access resource
 //
 if(isset($_GET['action']) && $_GET['action'] == 'repos') {
 	unset($_SESSION['access_token']);
