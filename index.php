@@ -24,11 +24,8 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 }
 
 
-//$githubClientID = '<fillme>';
-//$githubClientSecret = '<fillme>';
-
-$githubClientID = '385f1d62aee54ec42e2e';
-$githubClientSecret = '0fde58a7af596c624349a3eca1a2f403af86e95c';
+$githubClientID = '<fillme>';
+$githubClientSecret = '<fillme>';
 $apiURLBase = 'https://api.github.com/';
 $authorizeURL = $apiURLBase . '/login/oauth/authorize';
 $baseURL = 'http://localhost:8000';
