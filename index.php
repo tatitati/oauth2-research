@@ -38,7 +38,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 	unset($_SESSION['access_token']);
 	$_SESSION['state'] = bin2hex(random_bytes(16));
 
-	$params = [
+	$urlQuery = [
 		'response_type' => 'code',
 		'client_id' => $githubClientID,
 		'redirect_uri' => $baseURL,
@@ -47,7 +47,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 	];
 
 	// redirect -> this redirect show the github page to login.
-	header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+	header('Location: ' . $authorizeURL . '?' . http_build_query($urlQuery));
 	die();
 }
 
@@ -63,7 +63,7 @@ if (isset($_GET['code'])) {
 		'code' => $_GET['code']
 	]);
 
-	$_SESSION['token_reponse'] = $token;
+	$_SESSION['token_response'] = $token;
 	$_SESSION['access_token'] = $token['access_token'];
 	header('Location: ' . $baseURL);
 	die();
@@ -76,7 +76,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
 	unset($_SESSION['access_token']);
 	$_SESSION['state'] = bin2hex(random_bytes(16));
 
-	$params = [
+	$urlQuery = [
 		'response_type' => 'code',
 		'client_id' => $githubClientID,
 		'redirect_uri' => $baseURL,
@@ -85,7 +85,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
 	];
 
 	// redirect -> this redirect show the github page to login.
-	header('Location: ' . $authorizeURL . '?' . http_build_query($params));
+	header('Location: ' . $authorizeURL . '?' . http_build_query($urlQuery));
 	die();
 }
 
@@ -103,9 +103,9 @@ if (!isset($_GET['action'])) {
 	}
 
 
-	if (isset($_SESSION['token_reponse'])) {
+	if (isset($_SESSION['token_response'])) {
 		echo '<pre>';
-		print_r($_SESSION['token_reponse']);
+		print_r($_SESSION['token_response']);
 		echo '</pre>';
 	}
 }
