@@ -37,10 +37,10 @@ session_start();
 
 
 //
-// If loggin is successfull then this is triggered
+// OBTAIN ACCESS TOKEN (if login OK)
 //
 if (isset($_GET['code'])) {
-	// OBTAINING ACCESS TOKEN
+
 	$token = apiRequest($tokenURL, [
 		'grant_type' => 'authorization_code',
 		'client_id' => $githubClientID,
@@ -55,6 +55,9 @@ if (isset($_GET['code'])) {
 	die();
 }
 
+//
+// UI
+//
 if (!isset($_GET['action'])) {
 	if(!empty($_SESSION['access_token'])) {
 		echo '<h3>LOGGED IN</h3>';
