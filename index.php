@@ -19,16 +19,16 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 		$headers[] = 'Authorization: Bearer ' . $_SESSION['access_token'];
 	}
 
-	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-	$response = curl_exec($ch);
-	return json_decode($response, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);	
+	return json_decode(curl_exec($ch), true);
 }
 
 
 //$githubClientID = '<fillme>';
 //$githubClientSecret = '<fillme>';
 
+$githubClientID = '385f1d62aee54ec42e2e';
+$githubClientSecret = '0fde58a7af596c624349a3eca1a2f403af86e95c';
 $apiURLBase = 'https://api.github.com/';
 $authorizeURL = $apiURLBase . '/login/oauth/authorize';
 $baseURL = 'http://localhost:8000';
