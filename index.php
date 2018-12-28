@@ -21,8 +21,8 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 }
 
 
-$githubClientID = '<fillme>';
-$githubClientSecret = '<fillme>';
+$githubClientID = '385f1d62aee54ec42e2e';
+$githubClientSecret = '0fde58a7af596c624349a3eca1a2f403af86e95c';
 $apiURLBase = 'https://api.github.com/';
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
@@ -98,7 +98,6 @@ if(isset($_GET['action']) && $_GET['action'] == 'repos') {
 	// redirect -> this redirect show the github page to login.
 	// Array ( [0] => Array ( [id] => 80220016 [node_id] => MDEwOlJlcG9zaXRvcnk4MDIyMDAxNg== [name] => ....
 	$repos = apiRequest($reposUrl);
-
 	die();
 }
 
