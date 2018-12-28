@@ -68,8 +68,8 @@ if (isset($_GET['code'])) {
 	// Response:
 	//
 	// $_REQUEST = [
-	//		"code" => 9e4bc31afd6b7b470de7, 
-	//		"state" => c4c0408400c79b06e67a8a866d4f84a1 
+	//		"code" => ......, 
+	//		"state" => ....... 
 	// ]
 	//
 	$token = apiRequest($tokenURL, [
@@ -81,7 +81,7 @@ if (isset($_GET['code'])) {
 	]);
 
 	// Array ( 
-	// 	[access_token] => aa9fbad78f8472b2c2b7babf31e51848d6215dbb 
+	// 	[access_token] => ......... 
 	// 	[token_type] => bearer 
 	// 	[scope] => public_repo,user 
 	// ) 
