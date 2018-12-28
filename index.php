@@ -33,9 +33,9 @@ session_start();
 
 
 //
-// 1. Login user. Get CODE
+// 1. Login user and accept permissions. Oauth server returns the CODE
 //
-if(isset($_GET['action']) && $_GET['action'] == 'login') {
+if(isset($_GET['action']) && $_GET['action'] == 'login') {	
 	unset($_SESSION['access_token']);
 	$_SESSION['state'] = bin2hex(random_bytes(16));
 
@@ -43,7 +43,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 		'response_type' => 'code',
 		'client_id' => $githubClientID,
 		'redirect_uri' => $baseURL,
-		'scope' => 'user public_repo',
+		'scope' => 'user public_repo delete_repo',
 		'state' => $_SESSION['state']
 	];
 
@@ -61,7 +61,11 @@ if(isset($_GET['action']) && $_GET['action'] == 'login') {
 //
 // 2. OBTAIN ACCESS TOKEN (if login OK)
 //
-if (isset($_GET['code'])) {
+if (isset($_GET['code'])) {	
+	//
+	// https://github.com/login/oauth/access_token
+	//
+	// Response:
 	//
 	// $_REQUEST = [
 	//		"code" => 9e4bc31afd6b7b470de7, 
