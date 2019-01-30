@@ -21,8 +21,8 @@ function apiRequest($url, $post = FALSE, $headers = []) {
 }
 
 
-$githubClientID = '385f1d62aee54ec42e2e';
-$githubClientSecret = '0fde58a7af596c624349a3eca1a2f403af86e95c';
+$githubClientID = '< a client id >';
+$githubClientSecret = '< a client secret >';
 $apiURLBase = 'https://api.github.com/';
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
